@@ -32,12 +32,13 @@ class EvaluatorTest < Minitest::Test
     secret = "gbyb"
     result = valuator.check_against("heyo")
     assert result.downcase.include?("invalid")
+    # assert_equal 0, @guess_count
   end
 
-  def test_it_incrases_guess_count
+  def test_it_increases_guess_count
     secret = "gbyb"
     result = valuator.check_against("gbyr")
-    assert result.downcase.include?("guesses = 1")
+    assert result.downcase.include?("guess count is 1")
   end
 
 end

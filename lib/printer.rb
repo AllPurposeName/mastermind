@@ -51,4 +51,4 @@ Prepare to be a huge dork and start calling yourself the MASTERMIND!"
 and gain unprecidented bragging rights?"
   end
 
-gsend
+end

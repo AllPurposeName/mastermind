@@ -33,7 +33,7 @@ class PrinterTest < Minitest::Test
 
   def test_it_relates_hints
     result = printer.try_again
-    assert result.downcase.include?("guess again")
+    assert result.downcase.include?("your guess")
   end
 
   def test_it_explains_guesses_left
@@ -46,13 +46,18 @@ class PrinterTest < Minitest::Test
     assert result.downcase.include?("losing is fun")
   end
 
+  def test_it_prompts_to_play_again_after_defeat
+    result = printer.play_again_lose
+    assert result.downcase.include?("regain your dignity")
+  end
+
   def test_it_has_victory_screen
     result = printer.game_over_win
     assert result.downcase.include?("congratulations")
   end
 
-  def test_it_prompts_to_play_again
-    result = printer.play_again
-    assert result.downcase.include?("would you like to play again")
+  def test_it_prompts_to_play_again_after_victory
+    result = printer.play_again_win
+    assert result.downcase.include?("would you like to prove yourself further")
   end
 end

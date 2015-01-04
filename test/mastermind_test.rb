@@ -12,4 +12,6 @@ class MastermindTest < Minitest::Test
     result = mm.execute("BBGB")
     assert result.downcase.include?("win")
   end
+
+  def test_
 end

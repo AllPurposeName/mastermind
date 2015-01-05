@@ -1,6 +1,7 @@
 # evaluate if input is legit as input
 # evaluate legit input against secret
 # increase guess count and push to printer/mastermind
+require_relative 'code_generator'
 require 'pry'
 
 class Evaluator
@@ -13,7 +14,7 @@ attr_accessor :secret
 
   def valid?
     #.length check?
-    valid_letters = ["b", "g", "r", "y"]
+    valid_letters = CodeGenerator.new.valid_letters
     tally = @best_guess.chars.count do |letter|
       valid_letters.include?(letter)
     end

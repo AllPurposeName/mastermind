@@ -11,3 +11,14 @@ while input != "q"
   puts mastermind.execute(input)
 end
 puts "Goodbye!"
+# mastermind.difficulty(input)
+
+
+# Play, Instructions, Quit
+# if quit, quit
+# if instructions, give instructions, loop back
+# if play ask for difficulty: Expert, Intermediate, Normal, Beginner
+
+
+# pass difficulty to mastermind which creates secret array
+# prompt for guess, and begin game.

@@ -12,6 +12,7 @@ attr_accessor :secret
 
 
   def valid?
+    #.length check?
     valid_letters = ["b", "g", "r", "y"]
     tally = @best_guess.chars.count do |letter|
       valid_letters.include?(letter)

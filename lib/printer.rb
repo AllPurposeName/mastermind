@@ -1,11 +1,11 @@
 class Printer
 
   def mm
-    "#{"M"}#{"A"}#{"S"}#{"T"}#{"E"}#{"R"}#{"M"}#{"I"}#{"N"}#{"D"}"
+    "#{"M"}#{"A"}#{"S"}#{"T"}#{"E"}#{"R"}#{"M"}#{"I"}#{"N"}#{"D"}\n"
   end
 
   def intro
-    "Welcome to DJ's MASTERMIND challenge!
+    print    "Welcome to DJ's MASTERMIND challenge!
 
     You are to determine the number and order of four colors:
     #{"Blue"}
@@ -24,7 +24,7 @@ class Printer
     "Try again..."
   end
 
-  def try_again
+  def try_again(colors, references, max)
     "Your guess included #{"number_of_correct_colors"} of the correct colors
 and #{"number_of_correct_positions"} colors in the correct position."
   end

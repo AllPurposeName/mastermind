@@ -11,6 +11,7 @@ class CodeGeneratorTest < Minitest::Test
   def setup
     @valuator = CodeGenerator.new
     @valuator.secret = "gbyb"
+    @valuator.character_max = 4
   end
 
   def test_it_exists

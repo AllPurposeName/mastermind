@@ -8,7 +8,7 @@ class CodeGenerator
     @guess_count = 0
     @secret = []
     @max_guess = 0
-    @character_max = 4
+    @character_max = @valid_letters.count
   end
 
   def difficulty(difficulty="beginner")
@@ -27,29 +27,31 @@ class CodeGenerator
   end
 
   def valid?
-    @best_guess.length == @valid_letters.count
+    @best_guess.length == @character_max
   end
 
   def correct_reference
     @best_guess
-  count = -1
+  ref_count = -1
     correct = @best_guess.chars.count do |element|
-      count += 1
-      @secret.chars[count] == element
+      ref_count += 1
+      @secret.chars[ref_count] == element
     end
-  "#{correct} out of #{@valid_letters.count} colors in the correct position"
+    "#{correct} out of #{@character_max} colors in the correct position"
   # binding.pry
+    # [correct]
   end
 
   def correct_colors
-    count = 0
+    color_count = 0
     @best_guess.chars.uniq.all? do |element|
 # binding.pry
-      if @secret.include?(element) then count += 1
+      if @secret.include?(element) then color_count += 1
       end
     end
-    "#{count} out of #{@valid_letters.count} correct colors."
-
+    # binding.pry
+    "#{color_count} out of #{@character_max} correct colors."
+    # [color_count]
   end
 
   def check_against(best_guess="gggg")
@@ -61,6 +63,8 @@ class CodeGenerator
     if @best_guess == @secret; return answer = "correct"; #@game_status = over_win move before correct
     else @guess_count += 1; answer = "incorrect"
     end
+
+    # return printer.try_again(correct_colors, correct_reference, @character_max)
     return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
 
   end

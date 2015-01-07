@@ -1,16 +1,18 @@
 require './lib/mastermind'
+require './lib/game_menu'
 
-
-puts "Welcome to Mastermind"
 #prompt play instruction quit
 input = ""
 mastermind = MasterMind.new
 code_generator = CodeGenerator.new
+game = GameMenu.new
+printer = Printer.new
+printer.intro
 
 while input != "q"
   print "> "
   input = gets.chomp
-  puts mastermind.execute(input)
+  puts game.execute(input)
 end
 puts "Goodbye!"
 # mastermind.difficulty(input)

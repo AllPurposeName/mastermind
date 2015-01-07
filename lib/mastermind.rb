@@ -1,5 +1,4 @@
 require 'pry'
-require_relative 'evaluator'
 require_relative 'printer'
 require_relative 'code_generator'
 class MasterMind

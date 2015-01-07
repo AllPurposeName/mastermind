@@ -1,9 +1,11 @@
 require './lib/mastermind'
 
+
 puts "Welcome to Mastermind"
 #prompt play instruction quit
 input = ""
-mastermind = Mastermind.new
+mastermind = MasterMind.new
+code_generator = CodeGenerator.new
 
 while input != "q"
   print "> "

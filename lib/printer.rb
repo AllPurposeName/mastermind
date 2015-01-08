@@ -45,7 +45,7 @@ end
 Enter #{"e".light_black}(#{"x".light_black})#{"pert".light_black}, #{"in".red}(#{"t".red})#{"ermediate".red}, (#{"n".magenta})#{"ormal".magenta}, or enter anything else (except \"#{"q".red}\") to play as a whiny #{"beginner".cyan}.
 For more on difficulties and how they change the game, press (#{"i".yellow})#{"nstructions".yellow}"
   end
-  
+
   def take_first_guess
     "Now, guess which colors are where?!"
   end
@@ -55,38 +55,35 @@ For more on difficulties and how they change the game, press (#{"i".yellow})#{"n
   end
 
   def try_again(printables)
-    "Your guess included #{printables[0]} of the appropriate colors and #{printables[1]} out of #{printables[2]} colors in the correct position. Your guess count is #{printables[3]}. "
-#
-#
-#
-#
-#
+    "Your guess included #{printables[0]} of the appropriate colors and #{printables[1]} out of #{printables[2]} colors in the correct position.\"
+    Your guess count is #{printables[3]}. "
   end
 
-  def guesses_left
-    "Your guess total is up to #{"guess total"}.
-Only #{"guesses_remaing"} left."
-  end
-
-  def game_over_lose
+  def game_lost
     "You ran out of guesses. Keep your chin up and always remember:
 
-losing is fun."
+losing is fun.
+
+
+
+Buuuut perhaps you would like to regain your dignity and try again?
+    >  "
   end
 
-  def game_over_win
+  def game_won
     "CONGRATULATIONS! It seems you have conquered the puzzle afterall.
 
 Prepare to be a huge dork and start calling yourself the MASTERMIND!"
   end
 
-  def play_again_lose
-    "Buuuut perhaps you would like to regain your dignity and try again?"
-  end
-
   def play_again_win
-    "Well, MASTERMIND, would you like to prove yourself further
-and gain unprecidented bragging rights?"
+"
+Well, MASTERMIND, would you like to prove yourself further
+and gain unprecidented bragging rights?
+
+Press (#{"p".green})#{"lay".green} to #{"play".green} again, (#{"i".yellow})#{"nstructions".yellow}, or (#{"q".light_black})#{"uit".light_black} to #{"give up".light_black}.
+
+>  "
   end
 
   def goodbye
@@ -96,9 +93,9 @@ and gain unprecidented bragging rights?"
   def beginner
     "You have chosen... *yawn*... beginner.
 
-    XXXX
-
 You have to guess 4 positions the random sequence from colors
+
+    XXXX
 
 #{"Blue".blue}
 #{"Green".green}
@@ -112,9 +109,9 @@ Good luck. Srs who needs luck on beginner though?
   def normal
     "You have chosen normal. As good a place to start as any.
 
-    XXXXXX
-
     You have to guess 6 positions the random sequence from colors
+
+    XXXXXX
 
     #{"Blue".blue}
     #{"Green".green}
@@ -130,9 +127,9 @@ Good luck. Srs who needs luck on beginner though?
   def intermediate
     "You have chosen intermediate. Welcome to the big leagues!
 
-    XXXXXXXX
-
     You have to guess 8 positions the random sequence from colors
+
+    XXXXXXXX
 
     #{"Blue".blue}
     #{"Green".green}
@@ -150,9 +147,9 @@ Good luck. Srs who needs luck on beginner though?
     "Welcome, #{mm}.
     On expert level there are 10 positions in the random sequence.
 
-    XXXXXXXXXX
-
     It is composed of some or all of the following colours
+
+    XXXXXXXXXX
 
     #{"Blue".blue}
     #{"Green".green}
@@ -175,31 +172,21 @@ Good luck. Srs who needs luck on beginner though?
     #{"Expert".light_black} -- 7 colors with 10 positions and 16 guesses
 
     Enter #{"e".light_black}(#{"x".light_black})#{"pert".light_black}, #{"in".red}(#{"t".red})#{"ermediate".red}, (#{"n".magenta})#{"ormal".magenta}, or enter anything else (except \"#{"q".red}\") to play as a whiny #{"beginner".cyan}.
-    For more on difficulties and how they change the game, press (#{"i".yellow})#{"nstructions".yellow}"
+    For more on difficulties and how they change the game, press (#{"i".yellow})#{"nstructions".yellow}
+    > "
 
   end
 
   def too_long
-    "too long"
+    "Your entry was too long, please enter a valid guess."
   end
 
   def too_short
-    "too short"
+    "Your entry was too short, please enter a valid guess."
   end
 
   def invalid_entry
-    "invalid"
+    "Your entry is invalid, please enter a valid guess."
   end
 
 end
-
-#   def color_to(guess)
-#     colors = ["blue", "green", "red", "yellow", "magenta", "cyan", "light_black"]
-#     guess.chars.map do |letter|
-#       part_color = colors.each do |color|
-#         color.start_with?(letter)
-#       end
-#      letter.colorize(part_color.join.to_sym)
-#     end
-#
-#   end

@@ -21,10 +21,8 @@ class MasterMindTest < Minitest::Test
     assert result
   end
 
-  def test_case_name
+  def test_
     result = @mm.initiate("gbyb", 10)
-  
-
   end
 
 

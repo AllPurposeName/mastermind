@@ -1,6 +1,5 @@
 require 'pry'
 require './lib/printer'
-# require_relative 'mastermind'
 class CodeGenerator
   attr_reader :guess_count
   attr_accessor :valid_letters, :secret, :character_max, :max_guess
@@ -26,66 +25,58 @@ class CodeGenerator
   def create_secret(beginner_help=0)
     @max_guess = (@character_max + ((@character_max * 0.6).round)) + beginner_help
     newest_array = [@valid_letters.join] * @character_max
-    newest_array.map { |group| group.chars.sample }.join
+    [newest_array.map { |group| group.chars.sample }.join, @max_guess]
   end
 
-  def valid_length?
-    if @best_guess.length > @secret.length
-      [@printer.too_long, :ongoing]
-    elsif @best_guess.length < @secret.length
-      [@printer.too_short, :ongoing]
-    else
-      true
-    end
-  end
 
   def correct_reference
     @best_guess
   ref_count = -1
     correct = @best_guess.chars.count do |element|
-      # binding.pry
       ref_count += 1
       @secret.chars[ref_count] == element
     end
-    # "#{correct} out of #{@character_max} colors in the correct position"
-  # binding.pry
     correct
   end
 
   def correct_colors
     color_count = 0
     @best_guess.chars.uniq.all? do |element|
-# binding.pry
       if @secret.include?(element) then color_count += 1
       end
     end
-    # binding.pry
-    # "#{color_count} out of #{@character_max} correct colors."
     color_count
   end
 
-  def check_against(best_guess="gggg", secret)
+  def check_against(best_guess="gggg", secret, max_guesses)
+    @max_guess = max_guesses
     @secret = secret
     @best_guess = best_guess
-    # binding.pry
     if valid_length? != true
       return valid_length?
     end
-    if valid? == false
-      return [@printer.invalid_entry]
+    if valid_letters? == false
+      return [@printer.invalid_entry, :no_guess]
     end
-    if @best_guess == @secret; #return @game_over = true
-    else @guess_count += 1
-    # binding.pry
+    if @best_guess != @secret
+      @guess_count += 1
     end
     printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess, @best_guess]
-# binding.pry
-    return @printer.try_again(printables)
-    # return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
+    return [@printer.try_again(printables), :ongoing]
 
   end
 
-  def valid?
+  def valid_length?
+    if @best_guess.length > @secret.length
+      [@printer.too_long, :no_guess]
+    elsif @best_guess.length < @secret.length
+      [@printer.too_short, :no_guess]
+    else
+      true
+    end
+  end
+
+  def valid_letters?
     tally = @best_guess.chars.count do |letter|
       @valid_letters.include?(letter)
     end
@@ -97,12 +88,3 @@ class CodeGenerator
   end
 
 end
-
-
-
-
-# code = CodeGenerator.new
-# code.difficulty("expert")
-# code.create_secret
-# binding.pry
-# puts code.secret

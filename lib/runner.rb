@@ -6,63 +6,44 @@ input = ""
 @mastermind = MasterMind.new
 @code_generator = CodeGenerator.new
 @game_menu = GameMenu.new
-printer = Printer.new
+@printer = Printer.new
 
 
 def run
   message, signal = @game_menu.begin
   puts message
 
-until signal == :stop || signal == :broken
+  until signal == :stop || signal == :broken
 
-  if @game_menu.active?
-  input = gets.chomp.downcase
-    message, signal = @game_menu.execute(input)
-    puts message
-    if signal == :select_difficulty
-      input = gets.chomp.downcase
-      message, signal = @game_menu.difficulties(input)
+    if @game_menu.active?
+    input = gets.chomp.downcase
+      message, signal = @game_menu.execute(input)
       puts message
-      if signal != :select_difficulty
-        secret_code, max_guesses = @code_generator.difficulty(signal)
-        signal = :start_game
+      while signal == :select_difficulty
+        input = gets.chomp.downcase
+        message, signal = @game_menu.difficulties(input)
+        puts message
+        if signal != :select_difficulty
+          secret_code, max_guesses = @code_generator.difficulty(signal)
+          signal = :start_game
+        end
+      end
+      if signal == :start_game
+        message, signal = @mastermind.initiate(secret_code, max_guesses)
+        puts message
+      end
+      # binding.pry
+      if signal == :win
+        input = gets.chomp.downcase
+        @game_menu.execute(input)
+      end
+
+      if signal == :loser
+        input = gets.chomp.downcase
+        @game_menu.execute(input)
       end
     end
-    if signal == :start_game
-      message, signal = @mastermind.initiate(secret_code, max_guesses)
-    end
-    if signal == :win
-      #go back to menu
-    end
-    if signal == :select_difficulty
-      input = gets.chomp.downcase
-    end
-
-  # elsif @mastermind.active?
-  #   feedback = @mastermind.execute(input)
-  # else
-  #   :broken
   end
 end
-end  # puts message
 
-#
-# puts "Press (p)lay, (i)nstructions, (q)uit"
-# while input != "q"
-#   print "> "
-#   input = gets.chomp.downcase
-#   puts game.execute(input)
-# end
-# puts "Goodbye!"
-# @mastermind.difficulty(input)
-
-
-# Play, Instructions, Quit
-# if quit, quit
-# if instructions, give instructions, loop back
-# if play ask for difficulty: Expert, Intermediate, Normal, Beginner
-
-
-# pass difficulty to @mastermind which creates secret array
-# prompt for guess, and begin game.
 run

@@ -6,8 +6,9 @@ attr_accessor :guess_count
 
   def initialize
     @printer = Printer.new
-    @guess_count = 0
+    @guess_count = 1
     @code_gen = CodeGenerator.new
+    @max_guesses = 0
 
   end
 
@@ -18,62 +19,53 @@ attr_accessor :guess_count
   def initiate(code, max_guesses)
     @secret_code = code
     @max_guesses = max_guesses
+    @signal = :ongoing
     puts @printer.take_first_guess
-    while @game_state == :ongoing
+    while @signal == :ongoing
+      @guess_count += 1
       input = gets.chomp.downcase
-      @code_gen.check_against(input, code, max_guesses)
-      
-    @active = true
+      if input == 'q'
+        break
+      elsif guess_maxed?
+        [@printer.answer_incorrect_and_out_of_guesses, :game_lost]
+      end
+
+      message, @signal = @code_gen.check_against(input, code, max_guesses)
+      puts message
+      puts @secret_code
+      if @signal == :no_guess
+        @guess_count -= 1
+        @signal = :ongoing
+      end
+      if input == @secret_code
+      @signal = :game_won
+      break
+      end
+    end
+    message, signal = game_status
   end
 
-    return [@printer.game_over_win]
+  def game_status
+    if loser?
+      [@printer.game_lost, :loser]
+    elsif winner?
+      [@printer.game_won, @printer.play_again_win, :win]
+    else
+      [@printer.goodbye, :stop]
+    end
+  end
+
+  def winner?
+    @signal == :game_won
+  end
+
+  def loser?
+    @signal == :game_lost
+  end
+
+
+  def guess_maxed?
+    @guess_count == @max_guesses && input != code
   end
 
 end
-
-
-#   def execute(best_guess="gggg")
-#     while @game_over == false
-#     if best_guess.valid? == false
-#       @printer.invalid_length
-#     end
-#     if best_guess == @secret; @game_over = true; @printer.game_over_win
-#     else @guess_count += 1
-#     printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess]
-#     # binding.pry
-#     return @printer.try_again(printables)
-#     # return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
-#   end
-#
-#
-#   end
-#
-#   # def execute(input)
-#   #
-#   #   if input == secret
-#   #     "You win!"
-#   #   else
-#   #     "Guess again!"
-#   #   end
-#   # end
-#
-#   def guess_count
-#     @guess_count != 1
-#   end
-# end
-# end
-
-
-
-  # x initialize guess count
-  # x creates secret from array random
-  # x sample out each letter then join
-  # x determine difficulty from user input and adjust accordingly
-  # receive user input
-  # pass input to evaluator to check against secret
-  # return info and receive more user input
-  #
-
-
-  # secret algorhythm
-  # gets >> evaluator

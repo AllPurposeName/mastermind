@@ -1,7 +1,6 @@
 require './lib/printer'
 
 class GameMenu
-
   def initialize
     @printer = Printer.new
   end
@@ -34,7 +33,4 @@ class GameMenu
     else [@printer.beginner, :beginner]
     end
   end
-  # while
-# while acceptable_inputs.include?(input) == true
-# end
 end

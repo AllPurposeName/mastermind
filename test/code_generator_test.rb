@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/code_generator'
+require './lib/printer'
 
 class CodeGeneratorTest < Minitest::Test
 
@@ -10,6 +11,7 @@ class CodeGeneratorTest < Minitest::Test
 
   def setup
     @valuator = CodeGenerator.new
+    @printer = Printer.new
     @valuator.secret = "gbyb"
     @valuator.character_max = 4
   end
@@ -44,12 +46,12 @@ class CodeGeneratorTest < Minitest::Test
 
   def test_it_evaluates_the_secret_as_true
     result = valuator.check_against("gbyb")
-    assert result.downcase.include?("correct")
+    assert result
   end
 
-  def test_it_evalutates_the_wrong_answer_false
+  def test_it_pushes_the_wrong_answer_false
     result = valuator.check_against("gbyr")
-    assert result.downcase.include?("incorrect")
+    assert result.downcase.include?("your guess included")
   end
 
   def test_it_invalidates_non_uniform_answer
@@ -58,14 +60,14 @@ class CodeGeneratorTest < Minitest::Test
     # assert_equal 0, @guess_count
   end
 
-  def test_it_increases_guess_count
+  def test_it_increases_guess_countyyyyyy
     result = valuator.check_against("gbyr")
     assert result.downcase.include?("guess count is 1")
   end
 
   def test_it_checks_correct_amount_of_colors
     result = valuator.check_against("gbbr")
-    assert result.downcase.include?("2 out of 4 correct colors")
+    assert result.downcase.include?("2 of the appropriate colors")
   end
 
   def test_it_checks_correct_reference_against_secret

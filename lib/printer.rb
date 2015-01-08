@@ -16,6 +16,22 @@ class Printer
     Good luck. Perhaps we will see who is the true #{mm}!"
   end
 
+  def instructions
+    "At any time, press \"q\" to quit.
+Determine your difficulty and follow the prompts to take an appropriately sized guess.
+You will be guessing which colors fall into which positions.
+The game will give you hints back, but it is up to you to solve
+the secret code.
+
+Enter your answers in this format: gbgr
+
+Do not include spaces or other characters which don't correspond to
+the valid color.
+
+Don't forget, it is extremely shameful to lose at this easy game
+and you should probably quit before admitting true defeat."
+  end
+
   def take_first_guess
     "Now, guess which colors are where!"
   end
@@ -24,9 +40,8 @@ class Printer
     "Try again..."
   end
 
-  def try_again(colors, references, max)
-    "Your guess included #{"number_of_correct_colors"} of the correct colors
-and #{"number_of_correct_positions"} colors in the correct position."
+  def try_again(printables)
+    "Your guess included #{printables[0]} of the appropriate colors and #{printables[1]} out of #{printables[2]} colors in the correct position. Your guess count is #{printables[3]}. "
   end
 
   def guesses_left

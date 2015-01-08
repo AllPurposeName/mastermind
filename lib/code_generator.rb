@@ -1,4 +1,5 @@
 require 'pry'
+require './lib/printer'
 # require_relative 'mastermind'
 class CodeGenerator
   attr_accessor :valid_letters, :secret, :character_max, :max_guess
@@ -26,8 +27,8 @@ class CodeGenerator
     @secret = newest_array.map { |group| group.chars.sample }.join
   end
 
-  def valid?
-    @best_guess.length == @character_max
+  def valid?(guess)
+    guess.length == @character_max
   end
 
   def correct_reference
@@ -37,9 +38,9 @@ class CodeGenerator
       ref_count += 1
       @secret.chars[ref_count] == element
     end
-    "#{correct} out of #{@character_max} colors in the correct position"
+    # "#{correct} out of #{@character_max} colors in the correct position"
   # binding.pry
-    # [correct]
+    correct
   end
 
   def correct_colors
@@ -50,8 +51,8 @@ class CodeGenerator
       end
     end
     # binding.pry
-    "#{color_count} out of #{@character_max} correct colors."
-    # [color_count]
+    # "#{color_count} out of #{@character_max} correct colors."
+    color_count
   end
 
   def check_against(best_guess="gggg")
@@ -60,12 +61,13 @@ class CodeGenerator
     if valid? == false
       return "invalid input"
     end
-    if @best_guess == @secret; return answer = "correct"; #@game_status = over_win move before correct
-    else @guess_count += 1; answer = "incorrect"
+    if @best_guess == @secret; #return @game_over = true
+    else @guess_count += 1
     end
-
-    # return printer.try_again(correct_colors, correct_reference, @character_max)
-    return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
+    printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess]
+# binding.pry
+    return @printer.try_again(printables)
+    # return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
 
   end
 
@@ -79,17 +81,6 @@ class CodeGenerator
       false
     end
   end
-  #
-  # def check_against(best_guess="gggg")
-  #   @best_guess = best_guess
-  #   if valid? == false
-  #     return "invalid input"
-  #   end
-  #   if @best_guess == @secret; return answer = "correct"; #@game_status = over_win move before correct
-  #   else @guess_count += 1; answer = "incorrect"
-  #   end
-  #   return answer += " and guess count is #{@guess_count}"
-  # end
 
 end
 

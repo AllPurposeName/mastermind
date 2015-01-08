@@ -9,9 +9,33 @@ game = GameMenu.new
 printer = Printer.new
 printer.intro
 
+
+
+def run
+
+  message, signal = menu.start
+
+until signal == :stop || signal == :broken
+  input = gets.chomp.downcase
+
+  if menu.active?
+    message, signal = menu.execute(input)
+    if signal == :start_game
+      message, signal = game.start
+    end
+  elsif game.active?
+    feedback = game.execute(input)
+  else
+    :broken
+  end
+
+  puts message
+
+
+puts "Press (p)lay, (i)nstructions, (q)uit"
 while input != "q"
   print "> "
-  input = gets.chomp
+  input = gets.chomp.downcase
   puts game.execute(input)
 end
 puts "Goodbye!"

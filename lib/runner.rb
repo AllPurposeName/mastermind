@@ -10,7 +10,6 @@ printer = Printer.new
 
 
 def run
-
   message, signal = @game_menu.begin
   puts message
 
@@ -20,29 +19,32 @@ until signal == :stop || signal == :broken
   input = gets.chomp.downcase
     message, signal = @game_menu.execute(input)
     puts message
-    while signal == :select_difficulty
+    if signal == :select_difficulty
       input = gets.chomp.downcase
       message, signal = @game_menu.difficulties(input)
       puts message
-      # @code_generator.difficulty signal
-      if signal == :start_game
-        message, signal = @game_menu.begin
-      end
-      if signal == :win
-        #go back to menu
-      end
-      if signal == :select_difficulty
-        input = gets.chomp.downcase
+      if signal != :select_difficulty
+        secret_code, max_guesses = @code_generator.difficulty(signal)
+        signal = :start_game
       end
     end
-  elsif @mastermind.active?
-    feedback = @mastermind.execute(input)
-  else
-    :broken
+    if signal == :start_game
+      message, signal = @mastermind.initiate(secret_code, max_guesses)
+    end
+    if signal == :win
+      #go back to menu
+    end
+    if signal == :select_difficulty
+      input = gets.chomp.downcase
+    end
+
+  # elsif @mastermind.active?
+  #   feedback = @mastermind.execute(input)
+  # else
+  #   :broken
   end
 end
-end
-  # puts message
+end  # puts message
 
 #
 # puts "Press (p)lay, (i)nstructions, (q)uit"

@@ -17,7 +17,7 @@ class Printer
 
     Good luck. Perhaps we will see who is the true #{mm}!
 
-    Press (#{"p".green})#{"lay".green}, (#{"i".magenta})#{"nstructions".magenta}, or (#{"q".light_black})#{"uit".light_black} to continue."
+    Press (#{"p".green})#{"lay".green}, (#{"i".yellow})#{"nstructions".yellow}, or (#{"q".light_black})#{"uit".light_black} to continue."
 
   end
 
@@ -36,17 +36,18 @@ the valid color.
 Don't forget, it is extremely shameful to lose at this easy game
 and you should probably #{"quit".light_black} before admitting true defeat.
 
-Press (#{"p".green})#{"lay".green}, (#{"i".magenta})#{"nstructions".magenta}, or (#{"q".light_black})#{"uit".light_black} to continue."
+Press (#{"p".green})#{"lay".green}, (#{"i".yellow})#{"nstructions".yellow}, or (#{"q".light_black})#{"uit".light_black} to continue."
 
 end
 
   def difficulty
     "There are four levels of difficulty in DJ's #{mm}.
 Enter #{"e".light_black}(#{"x".light_black})#{"pert".light_black}, #{"in".red}(#{"t".red})#{"ermediate".red}, (#{"n".magenta})#{"ormal".magenta}, or enter anything else (except \"#{"q".red}\") to play as a whiny #{"beginner".cyan}.
-For more on difficulties and how they change the game, press (i)nstructions"
+For more on difficulties and how they change the game, press (#{"i".yellow})#{"nstructions".yellow}"
   end
+  
   def take_first_guess
-    "Now, guess which colors are where!"
+    "Now, guess which colors are where?!"
   end
 
   def take_guess
@@ -94,6 +95,9 @@ and gain unprecidented bragging rights?"
 
   def beginner
     "You have chosen... *yawn*... beginner.
+
+    XXXX
+
 You have to guess 4 positions the random sequence from colors
 
 #{"Blue".blue}
@@ -106,7 +110,10 @@ Good luck. Srs who needs luck on beginner though?
   end
 
   def normal
-    "You have chosen normal. Good place to start as any.
+    "You have chosen normal. As good a place to start as any.
+
+    XXXXXX
+
     You have to guess 6 positions the random sequence from colors
 
     #{"Blue".blue}
@@ -122,6 +129,9 @@ Good luck. Srs who needs luck on beginner though?
 
   def intermediate
     "You have chosen intermediate. Welcome to the big leagues!
+
+    XXXXXXXX
+
     You have to guess 8 positions the random sequence from colors
 
     #{"Blue".blue}
@@ -139,7 +149,10 @@ Good luck. Srs who needs luck on beginner though?
   def expert
     "Welcome, #{mm}.
     On expert level there are 10 positions in the random sequence.
-    It is composed of all the following colours
+
+    XXXXXXXXXX
+
+    It is composed of some or all of the following colours
 
     #{"Blue".blue}
     #{"Green".green}
@@ -159,8 +172,25 @@ Good luck. Srs who needs luck on beginner though?
     #{"Beginner".cyan} --  4 colors with 4 positions and infinite guesses
     #{"Normal".magenta} -- 5 colors with 6 positions and 10 guesses
     #{"Intermediate".red} -- 6 colors with 8 positions and 13 guesses
-    #{"Expert".light_black} -- 7 colors with 10 positions and 16 guesses"
+    #{"Expert".light_black} -- 7 colors with 10 positions and 16 guesses
+
+    Enter #{"e".light_black}(#{"x".light_black})#{"pert".light_black}, #{"in".red}(#{"t".red})#{"ermediate".red}, (#{"n".magenta})#{"ormal".magenta}, or enter anything else (except \"#{"q".red}\") to play as a whiny #{"beginner".cyan}.
+    For more on difficulties and how they change the game, press (#{"i".yellow})#{"nstructions".yellow}"
+
   end
+
+  def too_long
+    "too long"
+  end
+
+  def too_short
+    "too short"
+  end
+
+  def invalid_entry
+    "invalid"
+  end
+
 end
 
 #   def color_to(guess)

@@ -2,6 +2,7 @@ require 'pry'
 require './lib/printer'
 # require_relative 'mastermind'
 class CodeGenerator
+  attr_reader :guess_count
   attr_accessor :valid_letters, :secret, :character_max, :max_guess
 
   def initialize
@@ -15,10 +16,9 @@ class CodeGenerator
 
   def difficulty(difficulty=:beginner)
     case difficulty;
-    when :expert
-      @valid_letters.push("o", "c", "p"); @character_max += 6; self.create_secret
-    when :intermediate; @valid_letters.push("o", "p"); @character_max += 4; self.create_secret
-    when :normal; @valid_letters << "o"; @character_max += 2; self.create_secret
+    when :expert; @valid_letters.push("m", "g", "c"); @character_max += 6; self.create_secret
+    when :intermediate; @valid_letters.push("m", "c"); @character_max += 4; self.create_secret
+    when :normal; @valid_letters << "m"; @character_max += 2; self.create_secret
     else create_secret(94)
     end
   end
@@ -26,17 +26,24 @@ class CodeGenerator
   def create_secret(beginner_help=0)
     @max_guess = (@character_max + ((@character_max * 0.6).round)) + beginner_help
     newest_array = [@valid_letters.join] * @character_max
-    @secret = newest_array.map { |group| group.chars.sample }.join
+    newest_array.map { |group| group.chars.sample }.join
   end
 
-  def valid?(guess)
-    guess.length == @character_max
+  def valid_length?
+    if @best_guess.length > @secret.length
+      [@printer.too_long, :ongoing]
+    elsif @best_guess.length < @secret.length
+      [@printer.too_short, :ongoing]
+    else
+      true
+    end
   end
 
   def correct_reference
     @best_guess
   ref_count = -1
     correct = @best_guess.chars.count do |element|
+      # binding.pry
       ref_count += 1
       @secret.chars[ref_count] == element
     end
@@ -57,14 +64,19 @@ class CodeGenerator
     color_count
   end
 
-  def check_against(best_guess="gggg")
+  def check_against(best_guess="gggg", secret)
+    @secret = secret
     @best_guess = best_guess
     # binding.pry
+    if valid_length? != true
+      return valid_length?
+    end
     if valid? == false
-      return "invalid input"
+      return [@printer.invalid_entry]
     end
     if @best_guess == @secret; #return @game_over = true
     else @guess_count += 1
+    # binding.pry
     end
     printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess, @best_guess]
 # binding.pry

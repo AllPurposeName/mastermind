@@ -45,34 +45,40 @@ class CodeGeneratorTest < Minitest::Test
   end
 
   def test_it_evaluates_the_secret_as_true
-    result = valuator.check_against("gbyb")
+    result = valuator.check_against("gbyb", "gbyb")
     assert result
   end
 
-  def test_it_pushes_the_wrong_answer_false
-    result = valuator.check_against("gbyr")
-    assert result.downcase.include?("your guess included")
+  def test_it_evaluates_the_wrong_answer
+    valuator.check_against("gbyr", "gbyb")
+    result_1 = valuator.valid_length?
+    result_2 = valuator.valid?
+    assert result_1
+    assert result_2
   end
 
   def test_it_invalidates_non_uniform_answer
-    result = valuator.check_against("heyo")
-    assert result.downcase.include?("invalid")
-    # assert_equal 0, @guess_count
+    valuator.check_against("heyo", "gbyb")
+    result = valuator.valid?
+    refute result
   end
 
   def test_it_increases_guess_count
-    result = valuator.check_against("gbyr")
-    assert result.downcase.include?("guess count is 1")
+    valuator.check_against("gbyr", "gbyb")
+    result = valuator.guess_count
+    assert_equal 1, result
   end
 
   def test_it_checks_correct_amount_of_colors
-    result = valuator.check_against("gbbr")
-    assert result.downcase.include?("2 of the appropriate colors")
+    valuator.check_against("gbbr", "gbyb")
+    result = valuator.correct_colors
+    assert_equal 2, result
   end
 
   def test_it_checks_correct_reference_against_secret
-    result = valuator.check_against("ggbr")
-    assert result.downcase.include?("1 out of 4 colors in the correct position")
+    valuator.check_against("ggbr", "gbyb")
+    result = valuator.correct_reference
+    assert_equal 1, result
   end
 
   def test_intermediate_difficulty_adds_to_max_guess_count

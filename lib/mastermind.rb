@@ -8,45 +8,60 @@ attr_accessor :guess_count
     @printer = Printer.new
     @guess_count = 0
     @code_gen = CodeGenerator.new
+
   end
 
   def active?
     @active
   end
 
-  def begin
+  def initiate(code, max_guesses)
+    @secret_code = code
+    @max_guesses = max_guesses
+    puts @printer.take_first_guess
+    while @game_state == :ongoing
+      input = gets.chomp.downcase
+      @code_gen.check_against(input, code, max_guesses)
+      
     @active = true
-    return [printer.game_begin, :go]
   end
 
-  def execute(best_guess="gggg")
-    while @game_over == false
-    if best_guess.valid? == false
-      @printer.invalid_length
-    end
-    if best_guess == @secret; @game_over = true; @printer.game_over_win
-    else @guess_count += 1
-    printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess]
-    # binding.pry
-    return @printer.try_again(printables)
-    # return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
-  end
+    return [@printer.game_over_win]
   end
 
-  # def execute(input)
-  #
-  #   if input == secret
-  #     "You win!"
-  #   else
-  #     "Guess again!"
-  #   end
-  # end
-
-  def guess_count
-    @guess_count != 1
-  end
 end
-end
+
+
+#   def execute(best_guess="gggg")
+#     while @game_over == false
+#     if best_guess.valid? == false
+#       @printer.invalid_length
+#     end
+#     if best_guess == @secret; @game_over = true; @printer.game_over_win
+#     else @guess_count += 1
+#     printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess]
+#     # binding.pry
+#     return @printer.try_again(printables)
+#     # return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
+#   end
+#
+#
+#   end
+#
+#   # def execute(input)
+#   #
+#   #   if input == secret
+#   #     "You win!"
+#   #   else
+#   #     "Guess again!"
+#   #   end
+#   # end
+#
+#   def guess_count
+#     @guess_count != 1
+#   end
+# end
+# end
 
 
 

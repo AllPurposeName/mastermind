@@ -21,6 +21,11 @@ class MasterMindTest < Minitest::Test
     assert result
   end
 
+  def test_case_name
+    result = @mm.initiate("gbyb", 10)
+  
+
+  end
 
 
   def test_it_can_receive_user_input

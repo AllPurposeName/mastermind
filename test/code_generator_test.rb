@@ -26,20 +26,20 @@ class CodeGeneratorTest < Minitest::Test
   end
 
   def test_normal_difficulty_adds_to_secret
-    valuator.difficulty("normal")
+    valuator.difficulty(:normal)
     test_secret = valuator.create_secret
     assert_equal 6, test_secret.length
   end
 
   def test_intermediate_difficulty_adds_to_secret
-    valuator.difficulty("intermediate")
+    valuator.difficulty(:intermediate)
     test_secret = valuator.create_secret
     assert_equal 8, test_secret.length
   end
 
 
   def test_expert_difficulty_adds_to_secret
-    valuator.difficulty("expert")
+    valuator.difficulty(:expert)
     test_secret = valuator.create_secret
     assert_equal 10, test_secret.length
   end
@@ -60,7 +60,7 @@ class CodeGeneratorTest < Minitest::Test
     # assert_equal 0, @guess_count
   end
 
-  def test_it_increases_guess_countyyyyyy
+  def test_it_increases_guess_count
     result = valuator.check_against("gbyr")
     assert result.downcase.include?("guess count is 1")
   end
@@ -75,23 +75,52 @@ class CodeGeneratorTest < Minitest::Test
     assert result.downcase.include?("1 out of 4 colors in the correct position")
   end
 
-  def test_difficulty_adds_to_max_guess_count
-    valuator.difficulty("intermediate")
+  def test_intermediate_difficulty_adds_to_max_guess_count
+    valuator.difficulty(:intermediate)
     max_guess = valuator.max_guess
     assert_equal 13, max_guess
   end
 
-  def test_difficulty_adds_to_max_guess_count
-    valuator.difficulty("expert")
+  def test_expert_difficulty_adds_to_max_guess_count
+    valuator.difficulty(:expert)
     max_guess = valuator.max_guess
     assert_equal 16, max_guess
   end
 
-  def test_difficulty_adds_to_character_max
-    valuator.difficulty("expert")
+  def test_normal_difficulty_adds_to_max_guess_count
+    valuator.difficulty(:normal)
+    max_guess = valuator.max_guess
+    assert_equal 10, max_guess
+  end
+
+  def test_beginner_difficulty_has_nooby_max_guess_count
+    valuator.difficulty("houdini is no beginner")
+    max_guess = valuator.max_guess
+    assert_equal 100, max_guess
+  end
+
+  def test_expert_difficulty_adds_to_character_max
+    valuator.difficulty(:expert)
     character_max = valuator.character_max
     assert_equal 10, character_max
   end
 
+  def test_intermediate_difficulty_adds_to_character_max
+    valuator.difficulty(:intermediate)
+    character_max = valuator.character_max
+    assert_equal 8, character_max
+  end
+
+  def test_normal_difficulty_adds_to_character_max
+    valuator.difficulty(:normal)
+    character_max = valuator.character_max
+    assert_equal 6, character_max
+  end
+
+  def test_beginner_difficulty_does_not_adds_to_character_max
+    valuator.difficulty("Houdini is no beginner")
+    character_max = valuator.character_max
+    assert_equal 4, character_max
+  end
 
 end

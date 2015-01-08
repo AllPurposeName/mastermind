@@ -10,19 +10,21 @@ class CodeGenerator
     @secret = []
     @max_guess = 0
     @character_max = @valid_letters.count
+    @printer = Printer.new
   end
 
-  def difficulty(difficulty="beginner")
+  def difficulty(difficulty=:beginner)
     case difficulty;
-    when "expert"
+    when :expert
       @valid_letters.push("o", "c", "p"); @character_max += 6; self.create_secret
-    when "intermediate"; @valid_letters.push("o", "p"); @character_max += 4; self.create_secret
-    when "normal"; @valid_letters << "o"; @character_max += 2; self.create_secret
+    when :intermediate; @valid_letters.push("o", "p"); @character_max += 4; self.create_secret
+    when :normal; @valid_letters << "o"; @character_max += 2; self.create_secret
+    else create_secret(94)
     end
   end
 
-  def create_secret
-    @max_guess = (@character_max + ((@character_max * 0.6).round))
+  def create_secret(beginner_help=0)
+    @max_guess = (@character_max + ((@character_max * 0.6).round)) + beginner_help
     newest_array = [@valid_letters.join] * @character_max
     @secret = newest_array.map { |group| group.chars.sample }.join
   end
@@ -64,7 +66,7 @@ class CodeGenerator
     if @best_guess == @secret; #return @game_over = true
     else @guess_count += 1
     end
-    printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess]
+    printables = [correct_colors, correct_reference, @character_max, @guess_count, @max_guess, @best_guess]
 # binding.pry
     return @printer.try_again(printables)
     # return answer += " and guess count is #{@guess_count}" + correct_colors + correct_reference
